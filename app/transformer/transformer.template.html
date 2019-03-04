@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <form>
+<div class="form-group">
+  <p>Generador</p>
+  <label >voltaje Primario del generador </label>
+  <input ng-model="datosgenerador.voltajeprimario" type="typetext" class="form-control" placeholder="voltaje primario">
+  <label >voltaje Secundario del transformadores </label>
+  <input ng-model="datosgenerador.voltajesecundario" type="typetext" class="form-control" placeholder="voltaje secundario">  
+</div>
+
+<div>  
+  <label>cantidad de transformadores</label>   
+  <input  ng-model="numTransformadores"
+    ng-change="updateTransformadores();"
+    type="typetext" class="form-control"
+    placeholder="Escriba el numero de transformadores">
+</div>
+
+  <div class="contenedor transformador" ng-repeat="transformador in transformadores">
+    <h2>Motor: {{transformador.id}}</h2>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">configuracion</label>
+      <label for="exampleFormControlSelect2">conexion</label>
+      
+      <input class="form-check-input" ng-model="transformador.tipo" type="radio" value="1" >
+      <label >Monofasico</label>
+      <input class="form-check-input" ng-model="transformador.tipo" type="radio" value="2"  >
+      <label >bifasico</label>
+      <input class="form-check-input" ng-model="transformador.tipo" type="radio" value="3"  >
+      <label > Trifasico</label>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1"> Datos que tengas del transformador </label>
+      <input ng-model="transformador.voltaje" type="typetext" class="form-control" placeholder="voltaje">
+      <input ng-model="transformador.potenicaparente" type="typetext" class="form-control" placeholder="corriente">
+      <input ng-model="transformador.potenciareactiva" type="typetext" class="form-control" placeholder="factor de potencia">
+      <input ng-model="transformador.potenciaactiva" type="typetext" class="form-control" placeholder="potencia activa">
+      <input ng-model="transformador.corriente"  type="typetext" class="form-control" placeholder="potencia reactiva">
+    </div>
+    <p>Desea hacer la correccion de factor de potencia </p>
+    <input ng-model="transformador.correccion"
+      class="form-check-input" type="radio" value="true">
+    <label class="form-check-label">Sí</label>
+    <input ng-model="transformador.correccion" 
+    class="form-check-input" type="radio" value="false">
+    <label class="form-check-label">No</label>
+    
+  </div>
+
+
+
+
+
+  <label>Escriba la cantidad de motores</label>
+   <label for="exampleFormControlTextarea1"> Datos que tengas del transformador </label>
+    <input ng-model="datostransform.voltaje" type="typetext" class="form-control" placeholder="voltaje">
+    <input ng-model="datosmotor.potenicaparente" type="typetext" class="form-control" placeholder="corriente">
+    <input ng-model="datosmotor.potenciareactiva" type="typetext" class="form-control" placeholder="factor de potencia">
+    <input ng-model="datosmotor.potenciaactiva" type="typetext" class="form-control" placeholder="potencia activa">
+    <input ng-model="datosmotor.corriente"  type="typetext" class="form-control" placeholder="potencia reactiva">
+  
+  <button ng-click="show()" type="button">jose</button>
+
+  </div>
+</form>
+
+</div>
