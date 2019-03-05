@@ -5,6 +5,17 @@ angular.
   component('transformer', {
     templateUrl: 'transformer/transformer.template.html',
     controller: function TransformerController($scope) {
+      
+      $scope.configConexion = {
+        mono: 1,
+        bi: 2,
+        tri: 3
+      }
+      
+      $scope.datosgenerador={
+        voltajeprimario: 440,
+        voltajesecundario: 110
+      };
      
       $scope.numTransformadores = 0;
       $scope.transformadores=[];
@@ -14,38 +25,19 @@ angular.
         for(var i = 1; i <= $scope.numTransformadores; i++){
           $scope.transformadores.push({
             id: i,
-            tipo: "3",
-            voltaje: 0,
-            potenicaparente:0,
-            potenciareactiva:0,
-            potenciaactiva:0,
-            corriente:0,
-            factordepotencia:0,
-            caballosdefuerza:0,
-            correccion: "true",
+            tipo: 3,
+            voltaje: null,
+            potenicaparente: null,
+            potenciareactiva: null,
+            potenciaactiva: null,
+            corriente: null,
+            factordepotencia: null,
+            caballosdefuerza: null,
+            correccion: true,
             conexionesExternas: [],
             motores: []
           });
         }
-      };
-
-      $scope.datosgenerador={
-        voltajeprimario: 323,
-        voltajesecundario: 443
-      };
-
-      $scope.traconect={
-        cantidadtransconectado: 323
-      };
-
-      $scope.datosmotor={
-        voltaje: 0,
-        potenicaparente:0,
-        potenciareactiva:0,
-        potenciaactiva:0,
-        corriente:0,
-        factordepotencia:0,
-        caballosdefuerza:0
       };
 
       $scope.show=function(){
