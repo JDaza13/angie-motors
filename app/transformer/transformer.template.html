@@ -32,7 +32,7 @@
 
   <div class"contenedor-transformadores row">
     <div class="contenedor-transformador col-xs-12 col-md-6" ng-repeat="transformador in transformadores">
-      <div class="wrapper-transformador">
+      <div class="wrapper-transformador row">
         
         <h3>Transformador: {{transformador.id}}</h3>
         <div class="form-group contenedor-tipo-transformador">
@@ -47,19 +47,31 @@
         <div class="form-group contenedor-datos-transformador">
           <label>Datos del transformador: </label>
           <div class="input-group">
-            <input ng-model="transformador.voltaje" type="number" class="form-control" placeholder="voltaje">
+            <input ng-model="transformador.voltaje" type="number" class="form-control" placeholder="Voltaje">
             <span class="input-group-addon">V</span>
           </div>
           <div class="input-group">
-            <input ng-model="transformador.potenicaparente" type="number" class="form-control" placeholder="corriente">
-            <span class="input-group-addon">A</span>
-          </div>
-          <div class="input-group">
-            <input ng-model="transformador.potenciaactiva" type="number" class="form-control" placeholder="potencia activa">
+            <input ng-model="transformador.voltaje"  type="number" class="form-control" placeholder="Corriente">
             <span class="input-group-addon">W</span>
           </div>
           <div class="input-group">
-            <input ng-model="transformador.corriente"  type="number" class="form-control" placeholder="potencia reactiva">
+            <input ng-model="transformador.potenicaparente" type="number" class="form-control" placeholder="Potencia Aparente">
+            <span class="input-group-addon">A</span>
+          </div>
+          <div class="input-group">
+            <input ng-model="transformador.potenciaactiva" type="number" class="form-control" placeholder="Potencia Activa">
+            <span class="input-group-addon">W</span>
+          </div>
+          <div class="input-group">
+            <input ng-model="transformador.potenciareactiva" type="number" class="form-control" placeholder="Potencia Reactiva">
+            <span class="input-group-addon">W</span>
+          </div>
+          <div class="input-group">
+            <input ng-model="transformador.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia">
+            <span class="input-group-addon">W</span>
+          </div>
+          <div class="input-group">
+            <input ng-model="transformador.caballosdefuerza" type="number" class="form-control" placeholder="Caballos de Fuerza">
             <span class="input-group-addon">W</span>
           </div>
         </div>
@@ -68,7 +80,6 @@
           <span> <input ng-model="transformador.correccion"
             class="form-check-input" type="checkbox"></span>
         </div>
-        
         <!-- External conections for each transformer -->
         <span>Conexiones a otros transformadores: </span>
         <label ng-repeat="transformadorExtId in transformadoresIds" ng-if="transformadorExtId != transformador.id">
@@ -79,7 +90,73 @@
             ng-click="actualizarConexionesTransformador(transformador.id, transformadorExtId)">
             {{transformadorExtId}}
         </label>
-        
+        <div class="input-group">
+          <span class="input-group-addon">Cantidad de motores: </span>
+          <input ng-model="transformador.numeromotores" ng-change="updatemotores(transformador.id);" type="number" class="form-control"
+          placeholder="Escriba el número de motores">
+        </div>
+        <hr>
+        <!-- Motors for each transformer-->
+        <div class="contenedor-motor col-xs-12 col-md-6" ng-repeat="motor in transformador.motores">
+          <div class="wrapper-motor">
+            <h3>Motor: {{motor.id}}</h3>
+            <div class="form-group contenedor-tipo-motor">
+              <label for="exampleFormControlSelect1">Configuración de conexión: </label>
+              <input  class="form-check-input" ng-model="motor.tipo" type="radio" ng-value="configConexion.mono">
+              <label>Monofásico</label>
+              <input class="form-check-input" ng-model="motor.tipo" type="radio" ng-value="configConexion.bi">
+              <label>Bifásico</label>
+              <input class="form-check-input" ng-model="motor.tipo" type="radio" ng-value="configConexion.tri">
+              <label>Trifásico</label>
+  
+              <label>Datos del motor: </label>
+              <div class="input-group">
+                <input ng-model="motor.voltaje" type="number" class="form-control" placeholder="Voltaje">
+                <span class="input-group-addon">V</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.potenicaparente" type="number" class="form-control" placeholder="Corriente">
+                <span class="input-group-addon">A</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.potenciaactiva" type="number" class="form-control" placeholder="Potencia activa">
+                <span class="input-group-addon">W</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.corriente"  type="number" class="form-control" placeholder="Potencia reactiva">
+                <span class="input-group-addon">W</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.potenicaparente" type="number" class="form-control" placeholder="Potencia Aparente">
+                <span class="input-group-addon">A</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia">
+                <span class="input-group-addon">W</span>
+              </div>
+              <div class="input-group">
+                <input ng-model="motor.caballosdefuerza" type="number" class="form-control" placeholder="Caballos de Fuerza">
+                <span class="input-group-addon">W</span>
+              </div>
+              <div class"form-group contenedor-correccion-potencia">
+                <span>¿Desea hacer corrección del factor de potencia?</span>
+                <span> <input ng-model="motor.correccion" class="form-check-input" type="checkbox"></span>
+              </div>
+              <!-- External conections for each motor -->
+              <span>Conexiones a otros motores: </span>
+              <label ng-repeat="motorExtId in motoresIds" ng-if="motorExtId != motor.id">
+                <input
+                  type="checkbox"
+                  value="{{motorExtId}}"
+                  ng-checked="motor.conexionesExternas.indexOf(motorExtId) > -1"
+                  ng-click="actualizarConexionesMotor(transformador.id, motor.id, motorExtId)">
+                  {{motorExtId}}
+              </label>
+              
+              
+            </div>
+          </div>
+        </div>
         
         <!-- TODO ng-repeat for motors on each transformer-->
       </div>

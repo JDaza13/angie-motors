@@ -1,5 +1,12 @@
 .contenedor-transformador .wrapper-transformador{
-    border: 2px solid black;
+    border: 3px solid black;
     margin: 10px 0;
     padding: 10px;
 }
+
+.contenedor-transformador .wrapper-transformador .wrapper-motor{
+    border: 2px solid #ccc;
+    margin: 5px 0;
+    padding: 5px;
+}
+
