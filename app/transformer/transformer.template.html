@@ -108,14 +108,9 @@
               <label>Datos del motor: </label>
               <br><span>Voltaje : {{motor.voltaje}} V</span><br>
               <div class="input-group">
-                <input ng-model="motor.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia"
-                ng-change="onMotorFactordePontenciaChange(transformador.id, motor.id)">
+                <input ng-model="motor.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia">
                 <span class="input-group-addon">W</span>
-              </div>
-              <div class="input-group">
-                <input ng-model="motor.caballosdefuerza" type="number" class="form-control" placeholder="Caballos de Fuerza">
-                <span class="input-group-addon">W</span>
-              </div>              
+              </div>                         
               <div class="input-group">
                 <input ng-model="motor.corriente" type="number" class="form-control" placeholder="Corriente">
                 <span class="input-group-addon">A</span>
@@ -135,7 +130,8 @@
               <div class"form-group contenedor-correccion-potencia">
                 <span>¿Desea hacer corrección del factor de potencia?</span>
                 <span> <input ng-model="motor.correccion" class="form-check-input" type="checkbox"></span>
-              </div>              
+              </div>
+              <button class"btn button" ng-click="calcularValoresMotor(transformador.id, motor.id);">Calcular valores</button>
             </div>
           </div>
         </div>

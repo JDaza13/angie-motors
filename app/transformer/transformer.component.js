@@ -91,29 +91,48 @@ angular.
         //
       };
 
-      $scope.onMotorFactordePontenciaChange = function(transformadorId, motorId){
+      $scope.calcularValoresMotor = function(transformadorId, motorId){
         var currentMotor = $scope.transformadores[transformadorId-1].motores[motorId-1];
         //corriente (voltaje,potencia activa o potencia aparente o potencia reactiva)
-        if(currentMotor.potenciaaparente) {
+        if(currentMotor.potenciaaparente > 0) {
           switch(currentMotor.tipo){
-            case 1: currentMotor.corriente = currentMotor.potenciaaparente / currentMotor.voltaje* currentMotor.factordepotencia;
+            case 1: currentMotor.corriente = currentMotor.potenciaaparente / (currentMotor.voltaje)* currentMotor.factordepotencia;
               break;
-            case 2: currentMotor.corriente = currentMotor.potenciaaparente / currentMotor.voltaje* currentMotor.factordepotencia;
+            case 2: currentMotor.corriente = currentMotor.potenciaaparente / (currentMotor.voltaje/2) * currentMotor.factordepotencia;
               break;
-            case 3: currentMotor.corriente = currentMotor.potenciaaparente / currentMotor.voltaje* currentMotor.factordepotencia *Math.pow(3, 1/2);;
+            case 3: currentMotor.corriente = currentMotor.potenciaaparente / ( (currentMotor.voltaje/2) * currentMotor.factordepotencia *Math.pow(3, 1/2));
+              break;
+          }       
+        }
+        else if(currentMotor.potenciareactiva > 0) {
+          switch(currentMotor.tipo){
+            case 1: currentMotor.corriente = currentMotor.potenciareactiva / ((currentMotor.voltaje)* Math.sin(Math.acos(currentMotor.factordepotencia)));
+              break;
+            case 2: currentMotor.corriente = currentMotor.potenciareactiva / ((currentMotor.voltaje/2)* Math.sin(Math.acos(currentMotor.factordepotencia)));
+              break;
+            case 3: currentMotor.corriente = currentMotor.potenciareactiva / ( (currentMotor.voltaje/2) * Math.sin(Math.acos(currentMotor.factordepotencia)) *Math.pow(3, 1/2));
               break;
           }
-
         }
-        
-        //potenciaaparente
-        //potencia reactiva 
-
-      }
+        //potenciaaparente y potencia reactiva
+        else if(currentMotor.corriente > 0) {
+          switch(currentMotor.tipo){
+            case 1: currentMotor.potenciaaparente = ((currentMotor.voltaje)* currentMotor.corriente* currentMotor.factordepotencia);
+              currentMotor.potenciareactiva = ((currentMotor.voltaje)* currentMotor.corriente* currentMotor.factordepotencia);
+              break;
+            case 2: currentMotor.potenciaaparente = ((currentMotor.voltaje/2)* currentMotor.corriente* currentMotor.factordepotencia);
+              currentMotor.potenciareactiva = ((currentMotor.voltaje/2)* currentMotor.corriente* currentMotor.factordepotencia);
+              break;
+            case 3: currentMotor.potenciaaparente = ((currentMotor.voltaje/2)* currentMotor.corriente* currentMotor.factordepotencia*Math.pow(3, 1/2));
+              currentMotor.potenciareactiva = ((currentMotor.voltaje/2)* currentMotor.corriente* currentMotor.factordepotencia*Math.pow(3, 1/2));
+              break;            
+          }       
+        }
+      };
 
       $scope.show=function(){
         console.log($scope.datosgenerador);
         console.log($scope.transformadores);
-      }
+      };
     }
   });
