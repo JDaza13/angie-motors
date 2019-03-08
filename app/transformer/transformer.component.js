@@ -170,7 +170,7 @@ angular.
           currentTransformer.deltaXc = (currentTransformer.voltajesecundario*Math.pow(3, 1/2))/currentTransformer.corrienteCorreccion;
           currentTransformer.deltaC = 1/(2*Math.PI*currentTransformer.frecuencia*currentTransformer.deltaXc);
           
-          currentTransformer.EstrellaXc = (currentTransformer.voltajesecundario/currentTransformer.corrienteCorreccion*Math.pow(3, 1/2));
+          currentTransformer.estrellaXc = (currentTransformer.voltajesecundario/currentTransformer.corrienteCorreccion*Math.pow(3, 1/2));
         }
         
       };
@@ -258,7 +258,7 @@ angular.
           currentMotor.deltaXc = (currentMotor.voltaje*Math.pow(3, 1/2))/currentMotor.corrienteCorreccion;
           currentMotor.deltaC = 1/(2*Math.PI*currentMotor.frecuencia*currentMotor.deltaXc);
           
-          currentMotor.EstrellaXc = (currentMotor.voltaje/currentMotor.corrienteCorreccion*Math.pow(3, 1/2));
+          currentMotor.estrellaXc = (currentMotor.voltaje/currentMotor.corrienteCorreccion*Math.pow(3, 1/2));
         }
         
       };
