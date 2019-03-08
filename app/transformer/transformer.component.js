@@ -29,9 +29,9 @@ angular.
           $scope.transformadores.push({
             id: i,
             tipo: 3,
-            voltajeprimario: 13400,
+            voltajeprimario: 13200,
             voltajesecundario: 220,
-            potenicaparente: null,
+            potenciaaparente: null,
             potenciareactivasecundaria: null,
             potenciareactivaprimaria: null,
             potenciaactivasecundaria: null,
@@ -83,6 +83,7 @@ angular.
         }
       };     
 
+      //Fill al transformer fields if all motors have data
       $scope.calcularValoresTransformador = function(transformadorId) {
         var currentTransformer = $scope.transformadores[transformadorId-1];
         var allowCalculate = true;
@@ -101,14 +102,29 @@ angular.
         if(allowCalculate){
           var sumPotenciasActivas = 0;
           var sumPotenciasReactivas = 0;
+          var sumPotenciasAparentes = 0;
           for(var i = 0; i < currentTransformer.motores.length; i++){
 
             var currentMotor = currentTransformer.motores[i];
             sumPotenciasActivas += currentMotor.potenciaactiva;
             sumPotenciasReactivas += currentMotor.potenciareactiva;
+            sumPotenciasAparentes += currentMotor.potenciaaparente;
           }
           currentTransformer.potenciaactivasecundaria = sumPotenciasActivas;
           currentTransformer.potenciareactivasecundaria = sumPotenciasReactivas;
+          currentTransformer.potenciaaparente = sumPotenciasAparentes;
+          
+          switch(currentTransformer.tipo){
+            case 1: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario)* currentTransformer.factordepotencia);
+              currentTransformer.potenciareactivaprimaria = currentTransformer.voltajeprimario * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia));
+              break;
+            case 2: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario/2)* currentTransformer.factordepotencia);
+              currentTransformer.potenciareactivaprimaria = (currentTransformer.voltajeprimario/2) * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia));
+              break;
+            case 3: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario/2)* currentTransformer.factordepotencia*Math.pow(3, 1/2));
+              currentTransformer.potenciareactivaprimaria = (currentTransformer.voltajeprimario/2) * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia))*Math.pow(3, 1/2);
+              break;
+          }
         }
       };
 
