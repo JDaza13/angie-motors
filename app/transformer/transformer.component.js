@@ -116,13 +116,19 @@ angular.
           
           switch(currentTransformer.tipo){
             case 1: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario)* currentTransformer.factordepotencia);
+              currentTransformer.corrientesecundaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajesecundario)* currentTransformer.factordepotencia);
               currentTransformer.potenciareactivaprimaria = currentTransformer.voltajeprimario * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia));
+              currentTransformer.potenciaactivaprimaria = currentTransformer.voltajeprimario*currentTransformer.corrienteprimaria;
               break;
             case 2: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario/2)* currentTransformer.factordepotencia);
+              currentTransformer.corrientesecundaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajesecundario/2)* currentTransformer.factordepotencia);
               currentTransformer.potenciareactivaprimaria = (currentTransformer.voltajeprimario/2) * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia));
+              currentTransformer.potenciaactivaprimaria = (currentTransformer.voltajeprimario/2)*currentTransformer.corrienteprimaria;
               break;
             case 3: currentTransformer.corrienteprimaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajeprimario/2)* currentTransformer.factordepotencia*Math.pow(3, 1/2));
+              currentTransformer.corrientesecundaria = currentTransformer.potenciaaparente / ((currentTransformer.voltajesecundario/2)* currentTransformer.factordepotencia*Math.pow(3, 1/2));
               currentTransformer.potenciareactivaprimaria = (currentTransformer.voltajeprimario/2) * currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentMotor.factordepotencia))*Math.pow(3, 1/2);
+              currentTransformer.potenciaactivaprimaria = (currentTransformer.voltajeprimario/2)*currentTransformer.corrienteprimaria*Math.pow(3, 1/2);
               break;
           }
         }
