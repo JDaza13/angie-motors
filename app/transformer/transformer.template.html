@@ -165,6 +165,19 @@
                   </div>
                   <br><span>Potencia reactiva deseada : {{motor.potenciaReactivaDeseada}} VAR</span><br>
                   <br><span>Corriente de corrección : {{motor.corrienteCorreccion}} A</span><br>
+                  <span>Frecuencia: </span>
+                  <div class="input-group">
+                    <input ng-model="motor.frecuencia"
+                      type="number" class="form-control" placeholder="Frecuencia">            
+                  </div>
+                  <br><span>DELTA</span><br>
+                  <br><span>Xc : {{motor.deltaXc}} A</span><br>
+                  <br><span>C : {{motor.deltaC}} A</span><br>
+                  <br><span>ESTRELLA</span><br>
+                  <br><span>Xc : {{motor.estrellaXc}} A</span><br>
+                  <!--
+                  <br><span>C : {{motor.estrellaC}} A</span><br>
+                  -->
                 </div>
               </div>
               <button class"btn button" ng-click="calcularValoresMotor(transformador.id, motor.id);">Calcular valores motor!</button>

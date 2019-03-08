@@ -62,7 +62,8 @@ angular.
             corriente: null,
             factordepotencia: null,
             caballosdefuerza: null,
-            correccion: true            
+            correccion: true,
+            frecuencia: 60
           });          
         }
       }; 
@@ -253,6 +254,11 @@ angular.
             case 3: currentMotor.corrienteCorreccion = currentMotor.potenciaReactivaTotal/((currentMotor.voltaje/2)*currentMotor.factordepotencia)*Math.pow(3, 1/2);
               break;
           }
+          
+          currentMotor.deltaXc = (currentMotor.voltaje*Math.pow(3, 1/2))/currentMotor.corrienteCorreccion;
+          currentMotor.deltaC = 1/(2*Math.PI*currentMotor.frecuencia*currentMotor.deltaXc);
+          
+          currentMotor.EstrellaXc = (currentMotor.voltaje/currentMotor.corrienteCorreccion*Math.pow(3, 1/2));
         }
         
       };
