@@ -63,7 +63,7 @@
           <br><span>Corriente secundaria : {{transformador.corrientesecundaria}} A</span><br>
           <br><span>Corriente primaria : {{transformador.corrienteprimaria}} A</span><br>
           <br><span>Potencia aparente : {{transformador.potenicaparente}} W</span><br>
-          <br><span>Potencia activa secundaria : {{transformador.potenciaactivasecundaria}} VAR</span><br>
+          <br><span>Potencia activa secundaria : {{transformador.potenciaactivasecundaria}} VA</span><br>
           <br><span>Potencia reactiva secundaria : {{transformador.potenciareactivasecundaria}} VAR</span><br>
           <br><span>Potencia activa primaria : {{transformador.potenciaactivaprimaria}} VAR</span><br>
           <br><span>Potencia reactiva primaria : {{transformador.potenciareactivaprimaria}} VAR</span><br>          
@@ -83,6 +83,9 @@
             ng-click="actualizarConexionesTransformador(transformador.id, transformadorExtId)">
             {{transformadorExtId}}
         </label>
+        <br>
+        <button class"btn button" ng-click="calcularValoresTransformador(transformador.id);">Calcular valores transformador!</button>
+        <hr>
         <div ng-if="transformador.voltajeprimario > 0 && transformador.voltajesecundario > 0 && transformador.factordepotencia > 0"
             class="input-group">
           <span class="input-group-addon">Cantidad de motores: </span>
@@ -108,8 +111,9 @@
               <label>Datos del motor: </label>
               <br><span>Voltaje : {{motor.voltaje}} V</span><br>
               <div class="input-group">
-                <input ng-model="motor.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia">
-                <span class="input-group-addon">W</span>
+                <input ng-model="motor.factordepotencia" type="number" class="form-control" placeholder="Factor de Potencia"
+                  min="0" max="1">
+                <span class="input-group-addon">(fp > 0 <=1)</span>
               </div>                         
               <div class="input-group">
                 <input ng-model="motor.corriente" type="number" class="form-control" placeholder="Corriente">
@@ -131,7 +135,7 @@
                 <span>¿Desea hacer corrección del factor de potencia?</span>
                 <span> <input ng-model="motor.correccion" class="form-check-input" type="checkbox"></span>
               </div>
-              <button class"btn button" ng-click="calcularValoresMotor(transformador.id, motor.id);">Calcular valores</button>
+              <button class"btn button" ng-click="calcularValoresMotor(transformador.id, motor.id);">Calcular valores motor!</button>
             </div>
           </div>
         </div>
