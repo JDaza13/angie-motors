@@ -72,6 +72,16 @@
           <span>¿Desea hacer la corrección de factor de potencia?</span>
           <span> <input ng-model="transformador.correccion"
             class="form-check-input" type="checkbox"></span>
+          <br>
+          <div ng-if="transformador.correccion">
+            <div class="input-group">
+              <input ng-model="transformador.factorPotenciaDeseado"
+                ng-change="calcularValoresCorreccionTransformador(transformador.id)"
+                type="number" class="form-control" placeholder="Factor de potencia deseado">            
+            </div>
+            <br><span>Potencia reactiva deseada : {{transformador.potenciaReactivaDeseada}} VAR</span><br>
+            <br><span>Corriente de corrección : {{transformador.corrienteCorreccion}} A</span><br>
+          </div>
         </div>
         <!-- External conections for each transformer -->
         <span>Conexiones a otros transformadores: </span>

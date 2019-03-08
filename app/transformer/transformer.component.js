@@ -81,24 +81,30 @@ angular.
           $scope.transformadores[transformadorId-1].conexionesExternas.push(transformadorExtId);
           $scope.transformadores[transformadorExtId-1].conexionesExternas.push(transformadorId);
         }
-      };     
-
-      //Fill al transformer fields if all motors have data
-      $scope.calcularValoresTransformador = function(transformadorId) {
+      };    
+      
+      var allowCalculateTransformer = function(transformadorId) {
         var currentTransformer = $scope.transformadores[transformadorId-1];
-        var allowCalculate = true;
+        var result = true;
         
         for(var i = 0; i < currentTransformer.motores.length; i++){
           var currentMotor = currentTransformer.motores[i];
           if(!currentMotor.factordepotencia || !currentMotor.corriente ||
             !currentMotor.potenciaaparente || !currentMotor.potenciaactiva || !currentMotor.potenciareactiva){
               
-            allowCalculate = false;
+            result = false;
             alert("Motor " + (i+1) + " no tiene datos completos!");
             break;
           }
         }
-        
+        return result;
+      };
+
+      //Fill al transformer fields if all motors have data
+      $scope.calcularValoresTransformador = function(transformadorId) {
+        var currentTransformer = $scope.transformadores[transformadorId-1];
+        var allowCalculate = allowCalculateTransformer(transformadorId);
+
         if(allowCalculate){
           var sumPotenciasActivas = 0;
           var sumPotenciasReactivas = 0;
@@ -132,6 +138,35 @@ angular.
               break;
           }
         }
+        $scope.calcularValoresCorreccionTransformador(transformadorId);
+      };
+      
+      $scope.calcularValoresCorreccionTransformador = function(transformadorId) {
+        var currentTransformer = $scope.transformadores[transformadorId-1];
+        var allowCalculate = allowCalculateTransformer(transformadorId);
+        
+        if(currentTransformer.correccion && currentTransformer.factorPotenciaDeseado && allowCalculate){
+          switch(currentTransformer.tipo){
+            case 1: currentTransformer.potenciaReactivaDeseada = currentTransformer.voltajeprimario*currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentTransformer.factorPotenciaDeseado));
+              break;
+            case 2: currentTransformer.potenciaReactivaDeseada = (currentTransformer.voltajeprimario/2)*currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentTransformer.factorPotenciaDeseado));
+              break;
+            case 3: currentTransformer.potenciaReactivaDeseada = (currentTransformer.voltajeprimario/2)*currentTransformer.corrienteprimaria*Math.sin(Math.acos(currentTransformer.factorPotenciaDeseado))*Math.pow(3, 1/2);
+              break;
+          }
+          //Verificar si es con potenciareactivaprimaria
+          currentTransformer.potenciaReactivaTotal = currentTransformer.potenciareactivaprimaria - currentTransformer.potenciaReactivaDeseada;
+          
+          switch(currentTransformer.tipo){
+            case 1: currentTransformer.corrienteCorreccion = currentTransformer.potenciaReactivaTotal/(currentTransformer.voltajeprimario*currentTransformer.factordepotencia);
+              break;
+            case 2: currentTransformer.corrienteCorreccion = currentTransformer.potenciaReactivaTotal/((currentTransformer.voltajeprimario/2)*currentTransformer.factordepotencia);
+              break;
+            case 3: currentTransformer.corrienteCorreccion = currentTransformer.potenciaReactivaTotal/((currentTransformer.voltajeprimario/2)*currentTransformer.factordepotencia)*Math.pow(3, 1/2);
+              break;
+          }
+        }
+        
       };
 
       $scope.calcularValoresMotor = function(transformadorId, motorId){
