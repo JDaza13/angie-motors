@@ -40,6 +40,7 @@ angular.
             corrientesecundaria: null,
             factordepotencia: 0.9,            
             correccion: true,
+            frecuencia: 60,
             conexionesExternas: [],
             numeromotores: 0,
             motores: []
@@ -165,6 +166,10 @@ angular.
             case 3: currentTransformer.corrienteCorreccion = currentTransformer.potenciaReactivaTotal/((currentTransformer.voltajeprimario/2)*currentTransformer.factordepotencia)*Math.pow(3, 1/2);
               break;
           }
+          currentTransformer.deltaXc = (currentTransformer.voltajesecundario*Math.pow(3, 1/2))/currentTransformer.corrienteCorreccion;
+          currentTransformer.deltaC = 1/(2*Math.PI*currentTransformer.frecuencia*currentTransformer.deltaXc);
+          
+          currentTransformer.EstrellaXc = (currentTransformer.voltajesecundario/currentTransformer.corrienteCorreccion*Math.pow(3, 1/2));
         }
         
       };
