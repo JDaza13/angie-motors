@@ -81,6 +81,11 @@
             </div>
             <br><span>Potencia reactiva deseada : {{transformador.potenciaReactivaDeseada}} VAR</span><br>
             <br><span>Corriente de corrección : {{transformador.corrienteCorreccion}} A</span><br>
+            <span>Frecuencia: </span>
+            <div class="input-group">
+              <input ng-model="transformador.frecuencia"
+                type="number" class="form-control" placeholder="Frecuencia">            
+            </div>
             <br><span>DELTA</span><br>
             <br><span>Xc : {{transformador.deltaXc}} A</span><br>
             <br><span>C : {{transformador.deltaC}} A</span><br>
