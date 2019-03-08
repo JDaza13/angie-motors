@@ -223,6 +223,34 @@ angular.
           }       
         }
       };
+      
+      $scope.calcularValoresCorreccionMotor = function(transformadorId, motorId) {
+        var currentTransformer = $scope.transformadores[transformadorId-1];
+        var currentMotor = currentTransformer.motores[motorId-1];
+
+        if(currentMotor.correccion && currentMotor.factorPotenciaDeseado){
+          switch(currentTransformer.tipo){
+            case 1: currentMotor.potenciaReactivaDeseada = currentMotor.voltaje*currentMotor.corriente*Math.sin(Math.acos(currentMotor.factorPotenciaDeseado));
+              break;
+            case 2: currentMotor.potenciaReactivaDeseada = (currentMotor.voltaje/2)*currentMotor.corriente*Math.sin(Math.acos(currentMotor.factorPotenciaDeseado));
+              break;
+            case 3: currentMotor.potenciaReactivaDeseada = (currentMotor.voltaje/2)*currentMotor.corriente*Math.sin(Math.acos(currentMotor.factorPotenciaDeseado))*Math.pow(3, 1/2);
+              break;
+          }
+          //Verificar si es con potenciareactivaprimaria
+          currentMotor.potenciaReactivaTotal = currentMotor.potenciareactiva - currentMotor.potenciaReactivaDeseada;
+          
+          switch(currentTransformer.tipo){
+            case 1: currentMotor.corrienteCorreccion = currentMotor.potenciaReactivaTotal/(currentMotor.voltaje*currentMotor.factordepotencia);
+              break;
+            case 2: currentMotor.corrienteCorreccion = currentMotor.potenciaReactivaTotal/((currentMotor.voltaje/2)*currentMotor.factordepotencia);
+              break;
+            case 3: currentMotor.corrienteCorreccion = currentMotor.potenciaReactivaTotal/((currentMotor.voltaje/2)*currentMotor.factordepotencia)*Math.pow(3, 1/2);
+              break;
+          }
+        }
+        
+      };
 
       $scope.show=function(){
         console.log($scope.datosgenerador);
